@@ -30,7 +30,7 @@ El CSV completo no se incluirá en el repositorio. Su procesamiento y carga se r
 
 ## Fase actual
 
-**Fase 1: Análisis.** Se definen audiencia, objetivo, plan de preprocesamiento y justificación del dashboard. La limpieza de datos, la implementación y el despliegue todavía no se han realizado.
+**Fase 2: Diseño visual.** Audiencia exclusiva: analistas y planificadores de movilidad. Se definen KPIs, paleta, visualizaciones, cuadrícula y jerarquía del dashboard táctico. La limpieza de datos, la implementación y el despliegue todavía no se han realizado.
 
 ## Propuesta
 
@@ -49,9 +49,17 @@ El CSV completo no se incluirá en el repositorio. Su procesamiento y carga se r
 
 Se plantean series temporales, mapas por zonas, barras, histogramas y boxplots. La cantidad de viajes representa demanda observada, no una medición directa de congestión. Las propinas en efectivo no están incluidas en el campo de propinas de TLC.
 
+## Trabajo en la nube
+
+Los documentos y bocetos se conservan en GitHub. No se requiere descargar el CSV completo en la computadora del equipo. La futura carga por lotes y PostgreSQL se ejecutarán en infraestructura remota, pendiente de dimensionamiento y configuración. Todavía no hay una base de datos remota ni un dashboard funcional desplegados.
+
 ## Documentación
 
 - [Documento de justificación de la Fase 1](docs/Fase_1_Chicken_Brothers.pdf)
+
+- [Reporte de diseño de la Fase 2](docs/Fase_2_Diseno_Dashboard.pdf)
+- [Wireframe](design/Wireframe.png)
+- [Cuadrícula](design/Cuadricula.png)
 
 ## Siguientes fases
 
