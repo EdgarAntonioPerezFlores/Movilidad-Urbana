@@ -26,18 +26,21 @@ Analizar los patrones históricos de movilidad de los taxis amarillos de Nueva Y
 - **Alcance previsto:** conjunto completo de la fuente, con validación del periodo de inicio de viaje en 2018.
 - **Enlace:** https://data.cityofnewyork.us/Transportation/2018-Yellow-Taxi-Trip-Data/t29m-gskq/about_data
 
-El CSV completo no se incluirá en el repositorio. Su procesamiento y carga se realizarán por lotes en una fase posterior.
+El CSV completo no se incluye en el repositorio. Se añadió un importador por lotes para ejecutar en infraestructura remota; todavía no se ha ejecutado la carga completa.
 
 ## Fase actual
 
-**Fase 2: Diseño visual.** Audiencia exclusiva: analistas y planificadores de movilidad. Se definen KPIs, paleta, visualizaciones, cuadrícula y jerarquía del dashboard táctico. La limpieza de datos, la implementación y el despliegue todavía no se han realizado.
+**Inicio de implementación tras la Fase 2.** Dashboard táctico para analistas y planificadores de movilidad. React, API de Express, esquema PostgreSQL y carga remota preparados. **La base remota aún no está provisionada ni conectada; no hay datos reales cargados ni despliegue público.**
 
-## Propuesta
+## Implementación
 
-- **Tipo de dashboard:** táctico, basado en información histórica.
-- **Frontend previsto:** React.
-- **Base de datos propuesta:** PostgreSQL.
-- **Acceso a datos previsto:** una API que entregue resultados agregados al frontend.
+- **Frontend:** React + Vite, paleta oscura y gráficos Recharts.
+- **API:** Node + Express, consultas agregadas y filtros validados.
+- **Base de datos:** PostgreSQL; conexión privada mediante `DATABASE_URL`.
+- **Desarrollo remoto:** configuración de GitHub Codespaces incluida.
+- **Comprobaciones:** `npm test` y `npm run build`.
+
+Consulta la [guía para conectar React y PostgreSQL en la nube](docs/Conexion_React_PostgreSQL.md). La aplicación distingue errores, ausencia de datos y cargas parciales.
 
 ## Indicadores previstos
 
@@ -51,7 +54,7 @@ Se plantean series temporales, mapas por zonas, barras, histogramas y boxplots. 
 
 ## Trabajo en la nube
 
-Los documentos y bocetos se conservan en GitHub. No se requiere descargar el CSV completo en la computadora del equipo. La futura carga por lotes y PostgreSQL se ejecutarán en infraestructura remota, pendiente de dimensionamiento y configuración. Todavía no hay una base de datos remota ni un dashboard funcional desplegados.
+El código, documentos y bocetos se conservan en GitHub. Puedes abrir el repositorio en **Code → Codespaces** para trabajar sin instalar herramientas en tu computadora. La base PostgreSQL requiere un servicio remoto y dimensionamiento para el conjunto completo. El importador transmite el CSV por lotes sin guardarlo en disco.
 
 ## Documentación
 
@@ -63,4 +66,4 @@ Los documentos y bocetos se conservan en GitHub. No se requiere descargar el CSV
 
 ## Siguientes fases
 
-Aplicar y documentar el preprocesamiento, cargar PostgreSQL, implementar el dashboard en React y publicar la aplicación en un entorno web.
+Configurar PostgreSQL remoto, verificar y ejecutar la carga real, validar visualmente el dashboard, completar mapa y visualizaciones pendientes, y publicar la aplicación. Ver limitaciones y pasos en la guía de conexión.

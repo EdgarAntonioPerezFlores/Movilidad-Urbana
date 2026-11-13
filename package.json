@@ -1,0 +1,32 @@
+{
+  "name": "movilidad-urbana",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "concurrently -k \"node --env-file-if-exists=.env server/index.js\" \"vite --host 0.0.0.0\"",
+    "build": "vite build",
+    "start": "node --env-file-if-exists=.env server/index.js",
+    "db:migrate": "node --env-file-if-exists=.env scripts/migrate.js",
+    "data:import": "node --env-file-if-exists=.env scripts/import.js",
+    "data:refresh": "node --env-file-if-exists=.env scripts/refresh.js",
+    "test": "node --test tests/*.test.js",
+    "data:zones": "node --env-file-if-exists=.env scripts/zones.js"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "express": "^5.1.0",
+    "pg": "^8.16.0",
+    "csv-parse": "^6.1.0",
+    "recharts": "^3.0.0"
+  },
+  "devDependencies": {
+    "vite": "^7.0.0",
+    "concurrently": "^9.2.0",
+    "@electric-sql/pglite": "^0.3.0"
+  }
+}
