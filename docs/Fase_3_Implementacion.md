@@ -70,9 +70,9 @@ En pantallas estrechas los paneles se apilan conservando el orden. El detalle ad
 
 ![Dashboard actual: tabla](evidencias/dashboard-actual-tabla.png)
 
-**Evidencia actual:** capturas proporcionadas por el equipo el 15/11/2026. Muestran enero-abril, todos los días y zonas, 35,990,259 viajes con inicio válido, 120/120 días, mapa, comparaciones y tabla. Las 35,991,011 filas de origen difieren del KPI en 752; la captura no permite atribuir individualmente la causa de cada exclusión. Las capturas confirman la presentación de datos en escritorio, no todas las interacciones ni la vista móvil.
+**Evidencia actual:** capturas proporcionadas por el equipo el 15/11/2026. Muestran enero-abril, todos los días y zonas, 35,990,259 viajes con inicio válido, 120/120 días, mapa, comparaciones y tabla. Las 35,991,011 filas de origen difieren del KPI en 752; la captura no permite atribuir individualmente la causa de cada exclusión. Las capturas confirman la presentación de datos en escritorio. Las pruebas de interacción y adaptación a ventana estrecha fueron confirmadas por el equipo; no se presenta esta confirmación como una prueba automatizada en un teléfono físico.
 
-**Corrección posterior a las capturas:** las etiquetas del eje vertical temporal aparecen cortadas. Se amplió el margen y se abreviaron millones con «M», manteniendo valores exactos en ayudas y tabla. La compilación valida el cambio; su revisión visual en el Codespace queda pendiente.
+**Eje temporal corregido:** las capturas finales muestran etiquetas completas en millones («M»). Los valores exactos permanecen en las ayudas y tablas. Corrección comprobada visualmente en las evidencias del equipo.
 
 ## Implementación de KPIs
 
@@ -122,36 +122,53 @@ La tipografía usa Inter cuando está instalada, con Arial/sans-serif como alter
 4. Agregados vacíos: el proceso refresh verifica cuatro meses y publica la vista y su cobertura en transacción. Se conserva la versión que funcionó en Codespaces.
 5. Estilo anterior: selección gris, etiquetas técnicas en inglés, ejes redondeados y barras demasiado anchas; se corrigen con ayudas localizadas, decimales y ancho máximo.
 6. Distribución diferente al wireframe: se restituye mapa, ranking de tarifa y bloque de cobertura, con componentes separados.
-7. Entorno de revisión: Vite no arrancó en la vista previa administrada debido a `uv_interface_addresses`. La compilación y pruebas pasaron; las capturas posteriores del equipo evidencian la vista de escritorio con datos. Quedan pendientes interacciones y vista móvil. No se cambió la configuración de red para eludir el fallo.
+7. Entorno de revisión: Vite no arrancó en la vista previa administrada debido a `uv_interface_addresses`. La compilación y pruebas pasaron; las capturas posteriores del equipo evidencian la vista de escritorio con datos. El equipo confirmó posteriormente las interacciones y la adaptación al reducir la ventana. No se cambió la configuración de red para eludir el fallo.
 
 ## Verificación y rúbrica
 
 | Criterio del enunciado | Evidencia disponible | Estado |
 |---|---|---|
-| Correspondencia wireframe/dashboard | Orden de paneles, cuadrícula, mapa y tarifas implementados | Evidencia de escritorio recibida; comprobar interacciones |
-| KPIs y gráficos correctos | Pruebas SQL/API, denominadores propios, periodos, mapa y ranking | Pruebas automatizadas aprobadas; validar instancia real |
-| Paleta clara y consistente | CSS y componentes con colores de Fase 2 | Observada en las capturas; ajuste de eje pendiente de revisión |
+| Correspondencia wireframe/dashboard | Orden de paneles, cuadrícula, mapa y tarifas implementados | Comprobado en capturas y confirmado por el equipo |
+| KPIs y gráficos correctos | Pruebas SQL/API, denominadores propios, periodos, mapa y ranking | Pruebas aprobadas y API verificada en Codespaces |
+| Paleta clara y consistente | CSS y componentes con colores de Fase 2 | Comprobada en capturas finales; eje corregido |
 | Estructura y legibilidad | App, componentes, hook, utilidades, servidor, pruebas | Implementado |
 | Documentación clara | Este informe, PDF, tabla de trazabilidad, fuentes y capturas actuales | Informe y capturas actuales incorporados |
 
-El Markdown recibido tiene los puntajes separados de sus filas; no se asigna una distribución numérica que podría ser incorrecta. No se garantiza una calificación ni se declara 100/100. La revisión identifica cumplimiento en código y comprobaciones pendientes.
+El Markdown recibido tiene los puntajes separados de sus filas; no se asigna una distribución numérica que podría ser incorrecta. No se garantiza una calificación ni se declara 100/100. La revisión registra las comprobaciones de código, API y presentación realizadas, distinguiendo las pruebas automáticas de las confirmadas por el equipo.
 
 Pruebas ejecutadas: `npm test` (5 pruebas, incluidas consultas reales sobre PGlite), `npm run build` (compilación exitosa). PGlite es un motor PostgreSQL embebido de pruebas, no la base remota del equipo. La compilación emite aviso por tamaño de bundle; no es un error y queda como mejora de rendimiento. La geometría se comprueba por cantidad, unicidad y rango de coordenadas.
 
-## Pasos de verificación en Codespaces
+## Registro final de verificación — 15/11/2026
 
-1. Detener el servidor con Ctrl+C. Ejecutar `git pull --ff-only` y `npm ci`. Si Git informa conflictos, detenerse; no usar reset ni borrar cambios.
-2. Comprobar PostgreSQL con `pg_isready`; iniciarlo si hace falta.
-3. Ejecutar `npm test` y `npm run build`.
-4. Ejecutar `npm run dev`. En otra terminal, `npm run verify:dashboard`.
-5. Abrir puerto 5173. Verificar mapa y leyenda, seleccionar zona, quitar selección, cambiar día y fechas, comparar cuatro meses, Restablecer y revisar tablas.
-6. Probar anchura móvil (aprox. 390 px), teclado y estado sin resultados. Capturar pantalla superior e inferior de la versión final y agregarlas a docs/evidencias.
+La ejecución de `npm run verify:dashboard` en el Codespace fue aportada por el equipo y terminó con «Verificación API correcta». Se registraron los siguientes resultados:
 
-No se requiere nueva migración ni recalcular los 36 millones de registros para estos cambios. La API consulta la vista existente. La base del Codespace no se puede verificar desde este entorno sin acceso a ella.
+| Comprobación | Resultado |
+|---|---|
+| Viajes con inicio válido en el periodo | 35,990,259 |
+| Meses | 4: enero-abril de 2018 |
+| Días con viajes | 120 |
+| Zonas devueltas para el mapa | 262 |
+| Zonas del ranking de tarifa | 7 |
+| Estado de la verificación API | Correcta |
+
+El script comprueba salud de la API, alcance inicial, consistencia entre conteos por zona y KPI, selección de zona y rechazo de fechas fuera del alcance. No sustituye las pruebas del navegador.
+
+| Prueba manual | Resultado y evidencia |
+|---|---|
+| Seleccionar una zona y actualizar indicadores | Funcionamiento confirmado por el equipo |
+| Cambiar a Fin de semana | Funcionamiento confirmado por el equipo |
+| Restablecer filtros y recuperar 35,990,259 viajes | Funcionamiento confirmado por el equipo |
+| Reducir el ancho de ventana | Adaptación confirmada por el equipo |
+| Eje temporal sin cifras cortadas | Comprobado en las capturas finales |
+| Mapa, gráficos, KPIs y tabla con datos | Comprobado en las capturas finales |
+
+La revisión funcional de Fase 3 queda completada con estas evidencias. La adaptación en ventana estrecha no constituye una prueba en todos los dispositivos móviles. No se declara una auditoría exhaustiva de accesibilidad ni de compatibilidad entre navegadores.
+
+Para reproducir la comprobación, iniciar PostgreSQL si hace falta, ejecutar `npm run dev` y, en otra terminal, `npm run verify:dashboard`. Repetir las pruebas manuales de la tabla. No es necesario reimportar ni recalcular los viajes para estos cambios de presentación.
 
 ## Conclusión
 
-La implementación traduce las decisiones visuales y analíticas a componentes reutilizables. Los agregados permiten consultar millones de viajes sin llevar el detalle al navegador. La principal lección es separar conteos, cobertura y N válido para no confundir ausencia de datos con valores cero ni comparar métricas calculadas sobre conjuntos distintos. Las capturas actuales documentan la ejecución en escritorio. Para cerrar la entrega resta registrar la verificación de la API, las interacciones, la vista móvil y la corrección del eje temporal.
+La implementación traduce las decisiones visuales y analíticas a componentes reutilizables. Los agregados permiten consultar millones de viajes sin llevar el detalle al navegador. La principal lección es separar conteos, cobertura y N válido para no confundir ausencia de datos con valores cero ni comparar métricas calculadas sobre conjuntos distintos. Las capturas actuales documentan la ejecución en escritorio. La verificación satisfactoria de la API y las pruebas manuales confirmadas por el equipo completan la revisión funcional de esta fase. Se conserva la estructura del wireframe, la audiencia táctica y la coherencia visual acordada.
 
 ## Referencias
 
