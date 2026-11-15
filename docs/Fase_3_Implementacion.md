@@ -64,11 +64,15 @@ En pantallas estrechas los paneles se apilan conservando el orden. El detalle ad
 
 ![Wireframe de Fase 2](../design/Wireframe.png)
 
-![Dashboard funcional anterior a esta revisión: parte superior](evidencias/dashboard-antes-superior.png)
+![Dashboard actual: superior](evidencias/dashboard-actual-superior.png)
 
-![Dashboard funcional anterior a esta revisión: comparaciones](evidencias/dashboard-antes-inferior.png)
+![Dashboard actual: comparaciones](evidencias/dashboard-actual-comparaciones.png)
 
-**Estado de las capturas:** las dos capturas del dashboard fueron proporcionadas por el equipo y muestran la versión previa a esta revisión con datos reales y filtro «Entre semana». No evidencian todavía el mapa ni el nuevo gráfico de tarifas. Antes de entregar, añadir capturas de la versión actual desde el Codespace. No se presenta una maqueta ni datos inventados como ejecución real.
+![Dashboard actual: tabla](evidencias/dashboard-actual-tabla.png)
+
+**Evidencia actual:** capturas proporcionadas por el equipo el 15/11/2026. Muestran enero-abril, todos los días y zonas, 35,990,259 viajes con inicio válido, 120/120 días, mapa, comparaciones y tabla. Las 35,991,011 filas de origen difieren del KPI en 752; la captura no permite atribuir individualmente la causa de cada exclusión. Las capturas confirman la presentación de datos en escritorio, no todas las interacciones ni la vista móvil.
+
+**Corrección posterior a las capturas:** las etiquetas del eje vertical temporal aparecen cortadas. Se amplió el margen y se abreviaron millones con «M», manteniendo valores exactos en ayudas y tabla. La compilación valida el cambio; su revisión visual en el Codespace queda pendiente.
 
 ## Implementación de KPIs
 
@@ -118,17 +122,17 @@ La tipografía usa Inter cuando está instalada, con Arial/sans-serif como alter
 4. Agregados vacíos: el proceso refresh verifica cuatro meses y publica la vista y su cobertura en transacción. Se conserva la versión que funcionó en Codespaces.
 5. Estilo anterior: selección gris, etiquetas técnicas en inglés, ejes redondeados y barras demasiado anchas; se corrigen con ayudas localizadas, decimales y ancho máximo.
 6. Distribución diferente al wireframe: se restituye mapa, ranking de tarifa y bloque de cobertura, con componentes separados.
-7. Entorno de revisión: Vite no arrancó en la vista previa administrada debido a `uv_interface_addresses`. La compilación y pruebas pasaron; falta validar visualmente esta revisión con la base del Codespace. No se cambió la configuración de red para eludir el fallo.
+7. Entorno de revisión: Vite no arrancó en la vista previa administrada debido a `uv_interface_addresses`. La compilación y pruebas pasaron; las capturas posteriores del equipo evidencian la vista de escritorio con datos. Quedan pendientes interacciones y vista móvil. No se cambió la configuración de red para eludir el fallo.
 
 ## Verificación y rúbrica
 
 | Criterio del enunciado | Evidencia disponible | Estado |
 |---|---|---|
-| Correspondencia wireframe/dashboard | Orden de paneles, cuadrícula, mapa y tarifas implementados | Implementado; captura final pendiente |
+| Correspondencia wireframe/dashboard | Orden de paneles, cuadrícula, mapa y tarifas implementados | Evidencia de escritorio recibida; comprobar interacciones |
 | KPIs y gráficos correctos | Pruebas SQL/API, denominadores propios, periodos, mapa y ranking | Pruebas automatizadas aprobadas; validar instancia real |
-| Paleta clara y consistente | CSS y componentes con colores de Fase 2 | Implementado; revisión visual final pendiente |
+| Paleta clara y consistente | CSS y componentes con colores de Fase 2 | Observada en las capturas; ajuste de eje pendiente de revisión |
 | Estructura y legibilidad | App, componentes, hook, utilidades, servidor, pruebas | Implementado |
-| Documentación clara | Este informe, PDF, tabla de trazabilidad, fuentes y capturas previas | Preparada; completar evidencias finales |
+| Documentación clara | Este informe, PDF, tabla de trazabilidad, fuentes y capturas actuales | Informe y capturas actuales incorporados |
 
 El Markdown recibido tiene los puntajes separados de sus filas; no se asigna una distribución numérica que podría ser incorrecta. No se garantiza una calificación ni se declara 100/100. La revisión identifica cumplimiento en código y comprobaciones pendientes.
 
@@ -147,7 +151,7 @@ No se requiere nueva migración ni recalcular los 36 millones de registros para 
 
 ## Conclusión
 
-La implementación traduce las decisiones visuales y analíticas a componentes reutilizables. Los agregados permiten consultar millones de viajes sin llevar el detalle al navegador. La principal lección es separar conteos, cobertura y N válido para no confundir ausencia de datos con valores cero ni comparar métricas calculadas sobre conjuntos distintos. La entrega se completa con la validación visual y capturas finales en Codespaces; no con una modificación estética ajena al wireframe.
+La implementación traduce las decisiones visuales y analíticas a componentes reutilizables. Los agregados permiten consultar millones de viajes sin llevar el detalle al navegador. La principal lección es separar conteos, cobertura y N válido para no confundir ausencia de datos con valores cero ni comparar métricas calculadas sobre conjuntos distintos. Las capturas actuales documentan la ejecución en escritorio. Para cerrar la entrega resta registrar la verificación de la API, las interacciones, la vista móvil y la corrección del eje temporal.
 
 ## Referencias
 
