@@ -11,6 +11,10 @@ El dashboard transforma el wireframe de Fase 2 en una aplicación React para exp
 
 Esta revisión conserva el orden visual y los indicadores; completa el mapa y las barras de tarifa que faltaban. El resultado se publica como código en GitHub para ejecutarse contra PostgreSQL en el Codespace del equipo. No se ha publicado un nuevo alojamiento permanente ni se han vuelto a importar los viajes.
 
+## Justificación de la delimitación temporal
+
+Se redujo el periodo de análisis de todo 2018 a enero-abril para limitar el almacenamiento requerido por los archivos fuente, la base de datos y sus índices en Codespaces. Se procesaron los cuatro archivos mensuales completos, con 35,991,011 registros de origen. Por tanto, se trata de una delimitación temporal, no de una muestra aleatoria, y las conclusiones se restringen al periodo seleccionado.
+
 ## Estructura del proyecto
 
 ```text
