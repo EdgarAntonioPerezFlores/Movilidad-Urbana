@@ -17,20 +17,21 @@ Proyecto académico sobre transporte, ciudades inteligentes y sostenibilidad urb
 
 Analizar los patrones históricos de movilidad de los taxis amarillos de Nueva York durante 2018 para identificar diferencias temporales y geográficas que apoyen la planificación del servicio de transporte.
 
-## Dataset
+## Dataset y alcance
 
-- **Nombre general:** New York City Taxi Trips Dataset.
-- **Conjunto seleccionado:** 2018 Yellow Taxi Trip Data.
-- **Fuente:** NYC Open Data / Taxi and Limousine Commission (TLC).
-- **Identificador:** `t29m-gskq`.
-- **Alcance previsto:** conjunto completo de la fuente, con validación del periodo de inicio de viaje en 2018.
-- **Enlace:** https://data.cityofnewyork.us/Transportation/2018-Yellow-Taxi-Trip-Data/t29m-gskq/about_data
+**Enero a abril de 2018**, taxis amarillos de NYC TLC. El equipo sustituyó la exportación anual propuesta de NYC Open Data (`t29m-gskq`) por cuatro archivos mensuales oficiales `yellow_tripdata_2018-MM.parquet`. No se presupone equivalencia registro a registro entre ambas publicaciones.
 
-El CSV completo no se incluye en el repositorio. Se añadió un importador por lotes para ejecutar en infraestructura remota; todavía no se ha ejecutado la carga completa.
+Según las verificaciones aportadas desde Codespaces, se importaron **35,991,011 filas**, y la API mostró **35,990,259 viajes** con los filtros de la comprobación anterior. Estas cifras son evidencias de esa ejecución, no una nueva medición desde este repositorio. Los KPIs se calculan dinámicamente con el periodo y filtros.
+
+Fuente: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
 
 ## Fase actual
 
-**Inicio de implementación tras la Fase 2.** Dashboard táctico para analistas y planificadores de movilidad. React, API de Express, esquema PostgreSQL y carga remota preparados. **La base remota aún no está provisionada ni conectada; no hay datos reales cargados ni despliegue público.**
+**Fase 3: implementación.** React y PostgreSQL ya funcionaron en el Codespace del equipo. Esta revisión añade mapa, tarifas por zona, componentes y cobertura, y limita frontend/API a enero-abril. Falta ejecutar la verificación visual final y registrar capturas de esta revisión. No se ha desplegado un alojamiento permanente nuevo.
+
+- [Informe de implementación y revisión de rúbrica](docs/Fase_3_Implementacion.md)
+- [Informe en PDF](docs/Fase_3_Implementacion.pdf)
+- Verificación: `npm test`, `npm run build`, y `npm run verify:dashboard` con la API encendida.
 
 ## Implementación
 
@@ -42,7 +43,7 @@ El CSV completo no se incluye en el repositorio. Se añadió un importador por l
 
 Consulta la [guía para conectar React y PostgreSQL en la nube](docs/Conexion_React_PostgreSQL.md). La aplicación distingue errores, ausencia de datos y cargas parciales.
 
-## Indicadores previstos
+## Indicadores y visualizaciones
 
 - Cantidad de viajes por fecha, hora y zona.
 - Duración y distancia promedio.
@@ -50,11 +51,11 @@ Consulta la [guía para conectar React y PostgreSQL en la nube](docs/Conexion_Re
 - Propina registrada promedio en pagos con tarjeta, por zona o tipo de día.
 - Distribución de duración entre horas pico y valle.
 
-Se plantean series temporales, mapas por zonas, barras, histogramas y boxplots. La cantidad de viajes representa demanda observada, no una medición directa de congestión. Las propinas en efectivo no están incluidas en el campo de propinas de TLC.
+Se implementan la serie temporal, el mapa por zonas y las barras comparativas definidos en la Fase 2. Histogramas y boxplots eran sugerencias iniciales; no forman parte del wireframe seleccionado. La cantidad de viajes representa demanda observada, no una medición directa de congestión. Las propinas en efectivo no están incluidas en el campo de propinas de TLC.
 
 ## Trabajo en la nube
 
-El código, documentos y bocetos se conservan en GitHub. Puedes abrir el repositorio en **Code → Codespaces** para trabajar sin instalar herramientas en tu computadora. La base PostgreSQL requiere un servicio remoto y dimensionamiento para el conjunto completo. El importador transmite el CSV por lotes sin guardarlo en disco.
+El código, documentos y bocetos se conservan en GitHub. Puedes abrir el repositorio en **Code → Codespaces** para trabajar sin instalar herramientas en tu computadora. La base PostgreSQL se ejecuta actualmente en el Codespace; no es un alojamiento permanente. El importador transmite el CSV por lotes sin guardarlo en disco.
 
 ## Documentación
 
@@ -66,4 +67,4 @@ El código, documentos y bocetos se conservan en GitHub. Puedes abrir el reposit
 
 ## Siguientes fases
 
-Configurar PostgreSQL remoto, verificar y ejecutar la carga real, validar visualmente el dashboard, completar mapa y visualizaciones pendientes, y publicar la aplicación. Ver limitaciones y pasos en la guía de conexión.
+Validar esta revisión en Codespaces, incorporar capturas finales al informe y sincronizar los importadores locales. Después, evaluar alojamiento permanente. No volver a importar los meses ya cargados.

@@ -1,3 +1,5 @@
+> **Guía histórica de la integración inicial.** El equipo ya configuró PostgreSQL en Codespaces e importó enero–abril mediante Parquet. Para el estado vigente consulta [Fase 3](Fase_3_Implementacion.md). No vuelvas a ejecutar la importación CSV anual de esta guía sobre esa base.
+
 # React y PostgreSQL en la nube
 
 ## Estado real de esta entrega

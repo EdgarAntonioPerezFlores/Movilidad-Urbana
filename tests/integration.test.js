@@ -8,7 +8,7 @@ import {createApp} from '../server/app.js';
 const db=new PGlite();
 after(()=>db.close());
 test('Fechas y filtros rechazan fechas imposibles e inyección',()=>{
- for(const f of [{start:'2018-02-30'},{grain:"month'); DROP TABLE trips;--"},{zone:'1 OR 1=1'},{start:'2018-12-31',end:'2018-01-01'}])assert.throws(()=>parseFilters(f));
+ for(const f of [{start:'2018-02-30'},{end:'2018-05-01'},{grain:"month'); DROP TABLE trips;--"},{zone:'1 OR 1=1'},{start:'2018-12-31',end:'2018-01-01'}])assert.throws(()=>parseFilters(f));
  assert.equal(parseFilters({}).grain,'month');
  assert.equal(timestamp('2018 Jan 01 12:00:00 AM'),'2018-01-01 00:00:00');
  assert.equal(timestamp('2018 Jan 01 12:00:00 PM'),'2018-01-01 12:00:00');
@@ -28,7 +28,7 @@ test('PostgreSQL: métricas con denominadores propios, filtros y API',async()=>{
  REFRESH MATERIALIZED VIEW hourly_metrics;
  UPDATE import_state SET aggregates_at=now();`);
  const q=queries(parseFilters({}));const k=(await db.query(q.kpis.text,q.kpis.values)).rows[0];
- assert.equal(k.trips,4);assert.equal(k.duration,20);assert.equal(k.distance,16/3);assert.equal(k.fare_per_mile,38/16);assert.equal(k.tip,2);assert.equal(k.tip_n,2);
+ assert.equal(k.days_covered,2);assert.equal(k.trips,4);assert.equal(k.duration,20);assert.equal(k.distance,16/3);assert.equal(k.fare_per_mile,38/16);assert.equal(k.tip,2);assert.equal(k.tip_n,2);
  const weekend=queries(parseFilters({day:'weekend'})).kpis;
  assert.equal((await db.query(weekend.text,weekend.values)).rows[0].trips,1);
  const zone=queries(parseFilters({zone:'1'})).kpis;
@@ -37,6 +37,17 @@ test('PostgreSQL: métricas con denominadores propios, filtros y API',async()=>{
  const server=createApp(()=>db).listen(0,'127.0.0.1');await new Promise(r=>server.once('listening',r));
  try{const base=`http://127.0.0.1:${server.address().port}`;
  const result=await fetch(base+'/api/dashboard');assert.equal(result.status,200);const data=await result.json();assert.equal(data.kpis.trips,4);assert.equal(data.coverage.completed,false);assert.equal(data.zones.length,2);
+ assert.equal(data.map.reduce((sum,row)=>sum+row.trips,0),4);
+ assert.equal(data.fares[0].id,1);
+ assert.equal(data.fares[0].fare_n,2);
+ assert.equal(data.fares[0].fare_distance_sum,12);
+ const empty=await(await fetch(base+'/api/dashboard?start=2018-04-01&end=2018-04-30')).json();
+ assert.equal(empty.kpis.trips,0);assert.equal(empty.kpis.duration,null);
+ const selected=await(await fetch(base+'/api/dashboard?zone=2&day=weekend')).json();
+ assert.equal(selected.kpis.trips,1);assert.equal(selected.map.length,1);
+ assert.equal(selected.map[0].id,2);assert.equal(selected.fares[0].fare_per_mile,2);
+ assert.equal((await fetch(base+'/api/dashboard?end=2018-05-01')).status,400);
+ 
  assert.equal((await fetch(base+'/api/dashboard?start=2018-02-30')).status,400);
  await db.exec('UPDATE import_state SET aggregates_at=NULL');assert.equal((await(await fetch(base+'/api/dashboard')).json()).status,'empty');
  }finally{await new Promise(r=>server.close(r));}

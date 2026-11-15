@@ -5,3 +5,10 @@ dist/
 !.env.example
 *.csv
 *.parquet
+.venv/
+__pycache__/
+*.pyc
+*.bak
+data/
+!public/data/
+!public/data/**
