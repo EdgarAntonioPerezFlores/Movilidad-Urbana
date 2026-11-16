@@ -59,6 +59,10 @@ El código, documentos y bocetos se conservan en GitHub. Puedes abrir el reposit
 
 ## Documentación
 
+- Fase 1: [Análisis en Markdown](docs/Fase_1_Chicken_Brothers.md).
+- Fase 2: [Diseño en Markdown](docs/Fase_2_Diseno_Dashboard.md).
+- Fase 3: [Implementación en Markdown](docs/Fase_3_Implementacion.md).
+
 - [Documento de justificación de la Fase 1](docs/Fase_1_Chicken_Brothers.pdf)
 
 - [Reporte de diseño de la Fase 2](docs/Fase_2_Diseno_Dashboard.pdf)
