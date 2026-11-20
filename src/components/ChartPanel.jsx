@@ -18,6 +18,6 @@ export function Plot({rows=[],field='trips',bar=false}) {
   <details><summary>Ver valores del gráfico</summary><div className="table-scroll"><table><thead><tr><th>Categoría</th><th>{labels[field]}</th>{field==='fare_per_mile'&&<><th>N válido</th><th>Millas acumuladas</th></>}</tr></thead><tbody>{rows.map(row=><tr key={row.label}><td>{row.label}</td><td>{number(row[field],2)}</td>{field==='fare_per_mile'&&<><td>{number(row.fare_n)}</td><td>{number(row.fare_distance_sum,2)}</td></>}</tr>)}</tbody></table></div></details>
  </>;
 }
-export function ChartPanel({title,index,children,className=''}) {
- return <article className={`panel ${className}`}><div className="eyebrow">{index}</div><h2>{title}</h2>{children}</article>;
+export function ChartPanel({id,title,index,children,className=''}) {
+ return <article id={id} className={`panel ${className}`}><div className="eyebrow">{index}</div><h2>{title}</h2>{children}</article>;
 }
