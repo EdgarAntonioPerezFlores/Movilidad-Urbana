@@ -74,3 +74,63 @@ h1,h2,strong,.card h2{font-family:Inter,Arial,sans-serif}main{width:100%;max-wid
     padding: 20px 12px;
   }
 }
+
+/* Boton para mostrar y ocultar indice */
+.index-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  padding: 10px 16px;
+  background: #142d4e;
+  color: #5ad1c4;
+  border: 1px solid #365978;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.index-toggle:hover {
+  background: #204454;
+}
+
+/* Dashboard a pantalla completa cuando el indice se oculta */
+.with-index.index-hidden {
+  display: block;
+}
+
+.with-index.index-hidden > aside.section-index {
+  display: none;
+}
+
+.with-index.index-hidden > .shell {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+.with-index.index-hidden > .shell > main {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* Navegacion por secciones */
+html {
+  scroll-behavior: smooth;
+}
+
+#inicio,
+#tiempo,
+#mapa,
+#comparacion,
+#detalle,
+#contexto {
+  scroll-margin-top: 24px;
+}
+
+@media (max-width: 680px) {
+  .with-index > .shell > main {
+    padding: 20px 12px;
+  }
+}

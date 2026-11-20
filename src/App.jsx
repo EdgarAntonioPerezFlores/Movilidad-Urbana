@@ -7,14 +7,32 @@ import {Coverage} from './components/Coverage';
 import {useDashboard} from './hooks/useDashboard';
 import {initialFilters,number,money} from './lib/format';
 export default function App(){
+ const [indexOpen,setIndexOpen]=useState(true);
  const [filters,setFilters]=useState({...initialFilters}),[retry,setRetry]=useState(0),[zones,setZones]=useState([]),[zoneError,setZoneError]=useState('');
  const {data,loading,error}=useDashboard(filters,retry);
  useEffect(()=>{const controller=new AbortController();setZoneError('');fetch('/data/zones.json',{signal:controller.signal}).then(r=>{if(!r.ok)throw new Error('Catálogo de zonas no disponible.');return r.json();}).then(setZones).catch(e=>{if(e.name!=='AbortError')setZoneError(e.message);});return()=>controller.abort();},[retry]);
  const selectZone=id=>setFilters(current=>({...current,zone:id}));
  const period=`${filters.start} a ${filters.end}`;
- return <div className="with-index"><aside className="section-index"><nav aria-label="Índice del dashboard"><strong>Movilidad urbana</strong>{[
+ return <div className={`with-index ${indexOpen ? "" : "index-hidden"}`}><aside id="index-menu" className="section-index"><nav aria-label="Índice del dashboard"><strong>Movilidad urbana</strong>{[
     ['inicio','Resumen general'],['tiempo','Evolución de los viajes'],['mapa','Mapa de recogidas'],['comparacion','Comparaciones'],['detalle','Datos por zona'],['contexto','Cobertura y fuente']
-  ].map(([id,label]) => <a key={id} href={'#'+id} onClick={() => {if(id==='detalle') document.getElementById(id).open=true;}}>{label}</a>)}</nav></aside><div className="shell"><main id="inicio">
+  ].map(([id,label]) => <a key={id} href={'#'+id} onClick={event=>{
+      event.preventDefault();
+      const target=document.getElementById(id);
+      if(!target)return;
+      if(id==='detalle')target.open=true;
+      requestAnimationFrame(()=>target.scrollIntoView({
+        behavior:'smooth',block:'start'
+      }));
+    }}>{label}</a>)}</nav></aside><div className="shell"><main id="inicio">
+  <button
+    type="button"
+    className="index-toggle"
+    aria-controls="index-menu"
+    aria-expanded={indexOpen}
+    onClick={()=>setIndexOpen(value=>!value)}
+  >
+    {indexOpen ? '☰ Ocultar índice' : '☰ Mostrar índice'}
+  </button>
   <header><div><div className="eyebrow">CHICKEN BROTHERS / PROYECTO 04</div><h1>Movilidad urbana<span>.</span></h1><p>Dashboard táctico · Analistas y planificadores de movilidad</p></div><div className="dataset">NYC · YELLOW TAXI<strong>2018</strong><span>Enero–abril</span></div></header>
   <Filters filters={filters} setFilters={setFilters} zones={zones}/>
   <div aria-live="polite" className={`status ${error?'error':''}`}>{loading?'Consultando indicadores…':error?<>{error} <button onClick={()=>setRetry(retry+1)}>Reintentar</button></>:data?.status==='empty'?'Conexión disponible · Sin agregados publicados.':data?.kpis?.trips===0?'Sin viajes para los filtros seleccionados.':'Indicadores disponibles · Enero–abril de 2018.'}</div>
