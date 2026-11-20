@@ -13,3 +13,64 @@ h1,h2,strong,.card h2{font-family:Inter,Arial,sans-serif}main{width:100%;max-wid
 .section-index a:hover,.section-index a:focus-visible {background:#253850}
 .with-index>.shell {width:100%;min-width:0;box-sizing:border-box}
 @media(max-width:1000px){.with-index{display:block}.section-index nav{position:static;display:flex;flex-wrap:wrap;align-items:center;padding:.5rem}.section-index a{font-size:.85rem;padding:.4rem}}
+
+/* Correccion definitiva del indice lateral */
+.with-index {
+  display: grid;
+  grid-template-columns: 205px minmax(0, 1fr);
+  width: 100%;
+  min-height: 100vh;
+}
+
+.with-index > aside.section-index {
+  position: sticky;
+  inset: auto;
+  top: 0;
+  align-self: start;
+  display: block;
+  width: auto;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+}
+
+.with-index > .shell {
+  display: block;
+  grid-column: 2;
+  width: 100%;
+  min-width: 0;
+}
+
+.with-index > .shell > main {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+@media (max-width: 1000px) {
+  .with-index {
+    display: block;
+  }
+
+  .with-index > aside.section-index {
+    position: relative;
+    top: auto;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    border-right: 0;
+    border-bottom: 1px solid #34445b;
+  }
+
+  .with-index > .shell {
+    width: 100%;
+  }
+}
+
+@media (max-width: 680px) {
+  .with-index > .shell > main {
+    padding: 20px 12px;
+  }
+}
