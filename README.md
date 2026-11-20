@@ -1,5 +1,7 @@
 # Proyecto 4: La movilidad urbana y el tráfico inteligente
 
+[Abrir el dashboard en Vercel](https://movilidad-urbana-six.vercel.app/)
+
 ## Equipo
 
 **Chicken Brothers**
@@ -27,7 +29,7 @@ Fuente: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
 
 ## Fase actual
 
-**Fase 3: implementación.** React y PostgreSQL ya funcionaron en el Codespace del equipo. Esta revisión añade mapa, tarifas por zona, componentes y cobertura, y limita frontend/API a enero-abril. Falta ejecutar la verificación visual final y registrar capturas de esta revisión. No se ha desplegado un alojamiento permanente nuevo.
+La Fase 3 documenta la implementación y las pruebas del dashboard. En la Fase 4 se evaluará su uso con participantes.
 
 - [Informe de implementación y revisión de rúbrica](docs/Fase_3_Implementacion.md)
 - [Informe en PDF](docs/Fase_3_Implementacion.pdf)
@@ -55,7 +57,9 @@ Se implementan la serie temporal, el mapa por zonas y las barras comparativas de
 
 ## Trabajo en la nube
 
-El código, documentos y bocetos se conservan en GitHub. Puedes abrir el repositorio en **Code → Codespaces** para trabajar sin instalar herramientas en tu computadora. La base PostgreSQL se ejecuta actualmente en el Codespace; no es un alojamiento permanente. El importador transmite el CSV por lotes sin guardarlo en disco.
+En Codespaces procesamos los cuatro archivos mensuales en PostgreSQL. Alojar una segunda copia de los casi 36 millones de registros y sus índices habría requerido almacenamiento adicional. Para publicar el dashboard en Vercel exportamos resúmenes por hora y zona en cuatro archivos CSV, junto con el catálogo de zonas y los datos de cobertura.
+
+La rama `vercel` sirve esos archivos y la aplicación React. Al cambiar un filtro, el navegador calcula los indicadores con las sumas y conteos exportados. Así, el sitio público funciona incluso cuando el Codespace está apagado.
 
 ## Documentación
 
@@ -71,4 +75,4 @@ El código, documentos y bocetos se conservan en GitHub. Puedes abrir el reposit
 
 ## Siguientes fases
 
-Validar esta revisión en Codespaces, incorporar capturas finales al informe y sincronizar los importadores locales. Después, evaluar alojamiento permanente. No volver a importar los meses ya cargados.
+Aplicar la encuesta de la Fase 4 a usuarios del dashboard publicado y analizar sus respuestas.
