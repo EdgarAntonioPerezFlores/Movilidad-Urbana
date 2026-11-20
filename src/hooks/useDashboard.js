@@ -1,20 +1,30 @@
-import {useEffect,useState} from 'react';
-export function useDashboard(filters,retry) {
- const [state,setState]=useState({data:null,loading:true,error:''});
- useEffect(()=>{
-  const controller=new AbortController();
-  setState({data:null,loading:true,error:''});
-  async function load() {
-   try {
-    const response=await fetch(`/api/dashboard?${new URLSearchParams(filters)}`,{signal:controller.signal});
-    const data=await response.json();
-    if(!response.ok) throw new Error(data.message||'No se pudo consultar la API.');
-    if(!controller.signal.aborted) setState({data,loading:false,error:''});
-   } catch(error) {
-    if(!controller.signal.aborted) setState({data:null,loading:false,error:error.message});
-   }
-  }
-  load();return()=>controller.abort();
- },[filters,retry]);
- return state;
+import {useEffect, useState} from 'react';
+
+export function useDashboard(filters, retry) {
+  const [state, setState] = useState({data: null, loading: true, error: ''});
+  const [worker, setWorker] = useState(null);
+
+  useEffect(() => {
+    const instance = new Worker(new URL('../lib/dashboard.worker.js', import.meta.url), {type: 'module'});
+    setWorker(instance);
+    return () => instance.terminate();
+  }, [retry]);
+
+  useEffect(() => {
+    if (!worker) return;
+    const id = crypto.randomUUID();
+    setState({data: null, loading: true, error: ''});
+    const receive = ({data: response}) => {
+      if (response.id === id) setState({data: response.result, loading: false, error: response.error || ''});
+    };
+    const fail = () => setState({data: null, loading: false, error: 'No se pudieron calcular los indicadores.'});
+    worker.addEventListener('message', receive);
+    worker.addEventListener('error', fail);
+    worker.postMessage({id, filters});
+    return () => {
+      worker.removeEventListener('message', receive);
+      worker.removeEventListener('error', fail);
+    };
+  }, [worker, filters]);
+  return state;
 }

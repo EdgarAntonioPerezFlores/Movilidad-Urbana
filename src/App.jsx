@@ -9,7 +9,7 @@ import {initialFilters,number,money} from './lib/format';
 export default function App(){
  const [filters,setFilters]=useState({...initialFilters}),[retry,setRetry]=useState(0),[zones,setZones]=useState([]),[zoneError,setZoneError]=useState('');
  const {data,loading,error}=useDashboard(filters,retry);
- useEffect(()=>{const controller=new AbortController();setZoneError('');fetch('/api/zones',{signal:controller.signal}).then(r=>{if(!r.ok)throw new Error('Catálogo de zonas no disponible.');return r.json();}).then(setZones).catch(e=>{if(e.name!=='AbortError')setZoneError(e.message);});return()=>controller.abort();},[retry]);
+ useEffect(()=>{const controller=new AbortController();setZoneError('');fetch('/data/zones.json',{signal:controller.signal}).then(r=>{if(!r.ok)throw new Error('Catálogo de zonas no disponible.');return r.json();}).then(setZones).catch(e=>{if(e.name!=='AbortError')setZoneError(e.message);});return()=>controller.abort();},[retry]);
  const selectZone=id=>setFilters(current=>({...current,zone:id}));
  const period=`${filters.start} a ${filters.end}`;
  return <div className="shell"><main id="inicio">
